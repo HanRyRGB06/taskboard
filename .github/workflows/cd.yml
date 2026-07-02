@@ -23,7 +23,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}   # ดึงจาก GitHub Secrets
-          password: ${{ secrets.DOCKERHUB_TOKEN }}      # ไม่มีใครเห็นค่านี้ใน log
+          password: ${{ secrets.DOCKERHUB_TOKEN }}      # ดึง Token จาก GitHub Secrets
 
       # Step 3: Build และ Push Backend Image
       - name: Build & push backend image
@@ -31,14 +31,12 @@ jobs:
         with:
           context: ./backend          # ใช้ backend/Dockerfile
           push: true                  # push ขึ้น registry จริง
-          tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/taskboard-backend:latest
+          tags: henryrgb012/taskboard-backend:latest
 
       # Step 4: Build และ Push Frontend Image
       - name: Build & push frontend image
         uses: docker/build-push-action@v5
         with:
-          context: ./frontend
+          context: ./frontend         # ใช้ frontend/Dockerfile
           push: true
-          tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/taskboard-frontend:latest
+          tags: henryrgb012/taskboard-frontend:latest
